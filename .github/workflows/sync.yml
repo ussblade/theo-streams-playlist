@@ -1,0 +1,35 @@
+name: Sync Theo streams
+
+on:
+  schedule:
+    # GitHub uses UTC and ignores daylight saving: 12:07 a.m. Central in winter, 1:07 a.m. in summer.
+    - cron: '7 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 theo_vods.py
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      # Saved even after a failed run, so videos already added are not added twice.
+      - name: Save state
+        if: always()
+        run: |
+          [ -f state.json ] || exit 0
+          git add state.json
+          git diff --cached --quiet && exit 0
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m 'Update playlist state'
+          git push
