@@ -13,8 +13,8 @@ Once a day, around midnight Central, a GitHub Action:
    **top** so the newest stream is listed first.
 3. Removes each stream **30 days after its stream date**.
 
-The script only removes videos it added itself. It never re-adds a video you deleted from the
-playlist, and it leaves alone anything you add to the playlist by hand. What it has done is recorded
+It never re-adds a video you deleted from the playlist. It only removes Theo streams from Oct 25,
+2026 onward, so anything else you add to the playlist by hand stays. What it has done is recorded
 in `state.json`, which the Action commits back to this repo.
 
 **Costs:** none. Public repos get free Actions minutes, and the job saves no files, so it doesn't use
@@ -101,8 +101,8 @@ From then on, new streams appear at the top within about a day of airing.
   emails you first, and you can turn the job back on from the Actions page with one click.
 - **To change the settings,** edit the values at the top of `theo_vods.py`: `PLAYLIST_TITLE`,
   `START_DATE`, `KEEP_DAYS`. If you rename the playlist on YouTube, the script keeps using it.
-  Deleting the playlist on YouTube stops the job with an error. To make a fresh playlist, delete the
-  `playlist_id` line from `state.json`.
+  Deleting the playlist on YouTube stops the job with an error. To make a fresh playlist, change the
+  `playlist_id` value in `state.json` to `null`.
 - **To preview without signing in:** `python3 theo_vods.py --dry-run` lists what would be added or
   removed.
 - **To run the tests:** `python3 -m unittest discover -s tests -v`.
