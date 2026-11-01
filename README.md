@@ -39,11 +39,18 @@ You need the Google account that SmartTube is signed in to. You'll do this on th
    - App name: `Theo streams`. User support email: your email. Click **Next**.
    - Audience: **External**. Click **Next**.
    - Contact email: your email. Click **Next**, tick the agreement, and click **Create**.
-2. Go to **Audience** (<https://console.cloud.google.com/auth/audience>). Under *Publishing status*,
+2. Go to **Branding** (<https://console.cloud.google.com/auth/branding>). Google won't publish the app
+   without these. Fill in:
+   - Application home page: `https://ussblade.github.io/theo-streams-playlist/`
+   - Application privacy policy link: `https://ussblade.github.io/theo-streams-playlist/privacy.html`
+   - Authorized domains → **Add domain**: `ussblade.github.io`
+
+   Then click **Save**. Both pages are served from this repo's `gh-pages` branch.
+3. Go to **Audience** (<https://console.cloud.google.com/auth/audience>). Under *Publishing status*,
    click **Publish app**, then **Confirm**. It should now say **In production**.
    > ⚠️ Don't skip this. If it stays on *Testing*, Google cancels the sign-in after 7 days and the
    > playlist stops updating. You don't need to submit the app for verification.
-3. Go to **Clients** (<https://console.cloud.google.com/auth/clients>) and click **Create client**.
+4. Go to **Clients** (<https://console.cloud.google.com/auth/clients>) and click **Create client**.
    - Application type: **Desktop app**. Name: `Theo streams`. Click **Create**.
    - Click **Download JSON**. It saves a file named like `client_secret_….json` to `~/Downloads`.
 
